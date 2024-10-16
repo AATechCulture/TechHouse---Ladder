@@ -130,10 +130,10 @@ void displayMenu ()
 
 void displayTasks (string tasks[], int length)
 {
-  if (tasks[0] == "")
+  if (length == 0)
   {
     cout << endl;
-    cout << "No tasks in the list" << endl;
+    cout << "Task list is empty, add a task!" << endl;
   }
   cout << endl;
   for (int i = 0; i < length; i++)
@@ -148,12 +148,12 @@ void displayTasks (string tasks[], int length)
 
 void displayTaskReverse (string tasks[], int length)
 {
-   if (tasks[0] == "")
+   if (length == 0)
     {
       cout << endl;
-      cout << "No tasks in the list" << endl;
+      cout << "Task list is empty, add a task!" << endl;
     }
-  cout << endl;
+   cout << endl;
   for (int i = length - 1; i >= 0; i--)
   {
     cout << "Task #" << (i+1) << ". " << tasks[i] << endl;
@@ -255,7 +255,7 @@ bool isValid (string task)
     {
       hasDigit = true;
     }
-    else if (!isalpha(task[i]) && !isspace(task[i]))
+    else if (!isalpha(task[i]))
     {
       return false;
     }
