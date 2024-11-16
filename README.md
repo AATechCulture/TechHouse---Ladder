@@ -8,27 +8,29 @@ _______________
 # Project Name: Ladder
 
 ## Challenge Statement(s) Addressed 🎯
-**...include the challenge statement(s) the project worked to address**
 
-Examples:
-* How might we decrease the United States chances of alien and monster attacks given what we know from popular alien and monster movies?
-* How might we ....
-
+- How would we be able to improve the financial literacy of individuals and promote better spending/investment?
+- 
 ## Project Description 🤯
-**....at least 3 sentences describing what the project does and how it works**
+- An AI-powered tutoring program that uses user-inputed information to create tailored lesson plans about various financial topics
+- incorporates sponsors such as Lowe's and Fidelity as examples used for teaching topics
+- shows the progress of completed and incomplete modules as a list reminiscent of a ladder, encouraging users to continue learning
+- takes a lot of inspiration from Duolingo
 
 ## Project Value 💰
 **....at least 3 sentences describing your target customer and tangible benefits from your solution**
+- seeks to teach kids and young adults about financial information they may not be taught in school
+- promote better investment knowledge so that these individuals grow up to be successful and reinvest back into their local communities
+- while not seeking to directly advertise the sponsors, we hope that by using sponsors such as Fidelity will encourage users to go to the company since they have been familiarized
 
 ## Tech Overview 💻
 **... what tech was used to bring this project to life?**
-
-Example:
-* FastAPI
-* Hugging Face AI Models
-* Next.js
-* Java
-* ReactJS
+- HTML
+- Figma
+- Lowe's API
+- JavaScript
+- CSS
+- React
 
 ### Link to Video Pitch 📹
 **...point us to the short clip that tells us about your solution 😄**
