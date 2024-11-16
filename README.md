@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ### TL;DR 🚨 
 This is a repository template containing all the information that needs to accompany your project.
 
@@ -62,4 +63,6 @@ Christian L. Johnson
 Olutade Jegede
 Jean-Dominique Anoh
 
+=======
+>>>>>>> origin/backend
 
