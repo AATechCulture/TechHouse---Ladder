@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Previous styles remain the same */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .chat-container {
+            width: 400px;
+            height: 600px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-header {
+            background: #1a73e8;
+            color: white;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            align-items: center;
+        }
+        .bot-avatar {
+            width: 40px;
+            height: 40px;
+            background: #ffffff;
+            border-radius: 50%;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .chat-messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .message {
+            margin-bottom: 15px;
+            max-width: 80%;
+            animation: fadeIn 0.3s ease-in;
+        }
+        .bot-message {
+            background: #f0f2f5;
+            padding: 10px 15px;
+            border-radius: 15px;
+            margin-right: auto;
+        }
+        .user-message {
+            background: #1a73e8;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 15px;
+            margin-left: auto;
+        }
+        .chat-input {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+        }
+        input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #1557b0;
+        }
+        .typing-indicator {
+            padding: 10px;
+            display: none;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="bot-avatar">🤖</div>
+            <h2>AI Financial Advisor</h2>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="typing-indicator" id="typingIndicator">Bot is typing...</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Type your message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced knowledge base with interconnected topics and follow-up responses
+        const knowledgeBase = {
+            budgeting: {
+                keywords: ['budget', 'spending', 'save', 'track', 'expenses', 'income', 'money', 'plan'],
+                mainTopics: {
+                    basics: {
+                        info: "A budget helps you track income and expenses. The 50/30/20 rule suggests: 50% for needs, 30% for wants, and 20% for savings.",
+                        followUp: ["How do I start budgeting?", "What counts as needs vs wants?", "How can I track my expenses?"]
+                    },
+                    methods: {
+                        info: "Popular budgeting methods include: Zero-based budgeting, Envelope system, and 50/30/20 rule.",
+                        followUp: ["Tell me more about zero-based budgeting", "How does the envelope system work?", "Is the 50/30/20 rule right for me?"]
+                    },
+                    tracking: {
+                        info: "Track expenses using apps, spreadsheets, or paper. Categories include housing, food, transportation, and entertainment.",
+                        followUp: ["What are the best budgeting apps?", "How do I categorize expenses?", "How often should I review my budget?"]
+                    }
+                },
+                relatedTopics: ['saving', 'debt', 'investing'],
+                questions: {
+                    "how": "Start by tracking all expenses for a month, then categorize them into needs, wants, and savings.",
+                    "what": "A budget is a plan that helps you manage your money by tracking income and expenses.",
+                    "why": "Budgeting helps you reach financial goals, avoid debt, and build savings.",
+                    "when": "Start budgeting as soon as possible. Review your budget monthly and adjust as needed.",
+                    "where": "Use budgeting apps, spreadsheets, or traditional paper methods to track your budget."
+                }
+            },
+            investing: {
+                keywords: ['invest', 'stock', 'bond', 'market', 'portfolio', 'return', 'risk', 'fund'],
+                mainTopics: {
+                    basics: {
+                        info: "Investing helps grow wealth over time. Common investments include stocks, bonds, and mutual funds.",
+                        followUp: ["What's the difference between stocks and bonds?", "How do I start investing?", "What are mutual funds?"]
+                    },
+                    strategy: {
+                        info: "Investment strategies should match your goals and risk tolerance. Diversification is key to managing risk.",
+                        followUp: ["How do I determine my risk tolerance?", "What is diversification?", "How much should I invest?"]
+                    },
+                    accounts: {
+                        info: "Common investment accounts include 401(k)s, IRAs, and taxable brokerage accounts.",
+                        followUp: ["What's the difference between 401(k) and IRA?", "How do I open an investment account?", "What are the tax benefits?"]
+                    }
+                },
+                relatedTopics: ['retirement', 'taxes', 'budgeting'],
+                questions: {
+                    "how": "Start by opening an investment account and consider low-cost index funds for beginners.",
+                    "what": "Investments are assets bought to generate returns through appreciation or income.",
+                    "why": "Investing helps build long-term wealth and beat inflation.",
+                    "when": "Start investing as early as possible to benefit from compound interest.",
+                    "where": "Invest through brokers, retirement accounts, or robo-advisors."
+                }
+            }
+        };
+
+        // Enhanced conversation state management
+        let conversationState = {
+            history: [],
+            currentTopic: null,
+            currentSubtopic: null,
+            context: {
+                lastQuestion: null,
+                followUps: [],
+                clarificationNeeded: false
+            },
+            userProfile: {
+                knownTopics: new Set(),
+                interests: new Set(),
+                questionsAsked: new Set()
+            }
+        };
+
+        // Process user input and detect intent
+        function processUserInput(text) {
+            text = text.toLowerCase();
+            
+            // Check for follow-up questions
+            if (text.includes('more') || text.includes('explain') || text.includes('clarify')) {
+                return handleFollowUp(text);
+            }
+
+            // Check for new topic
+            const newTopic = detectTopic(text);
+            if (newTopic) {
+                conversationState.currentTopic = newTopic;
+                return handleNewTopic(newTopic, text);
+            }
+
+            // Check for question type
+            const questionType = detectQuestionType(text);
+            if (questionType && conversationState.currentTopic) {
+                return handleSpecificQuestion(questionType);
+            }
+
+            // Handle general questions within current topic
+            if (conversationState.currentTopic) {
+                return handleTopicQuestion(text);
+            }
+
+            return getDefaultResponse();
+        }
+
+        // Detect question type (how, what, why, when, where)
+        function detectQuestionType(text) {
+            const questionWords = ['how', 'what', 'why', 'when', 'where'];
+            for (let word of questionWords) {
+                if (text.startsWith(word)) {
+                    return word;
+                }
+            }
+            return null;
+        }
+
+        // Handle follow-up questions
+        function handleFollowUp(text) {
+            if (!conversationState.currentTopic) {
+                return getDefaultResponse();
+            }
+
+            const topic = knowledgeBase[conversationState.currentTopic];
+            const subtopics = Object.keys(topic.mainTopics);
+            
+            // Find relevant subtopic based on context and user input
+            for (let subtopic of subtopics) {
+                if (text.includes(subtopic) || 
+                    topic.mainTopics[subtopic].followUp.some(q => text.includes(q.toLowerCase()))) {
+                    return topic.mainTopics[subtopic].info;
+                }
+            }
+
+            // If no specific subtopic is found, provide general follow-up
+            return `I can tell you more about ${subtopics.join(', ')} related to ${conversationState.currentTopic}. What specifically interests you?`;
+        }
+
+        // Handle new topic introduction
+        function handleNewTopic(topic, text) {
+            const topicData = knowledgeBase[topic];
+            conversationState.userProfile.knownTopics.add(topic);
+            
+            // Provide topic overview and suggest follow-ups
+            const overview = topicData.mainTopics.basics.info;
+            const followUps = topicData.mainTopics.basics.followUp.join('\n- ');
+            return `${overview}\n\nYou might want to know:\n- ${followUps}`;
+        }
+
+        // Handle specific questions within a topic
+        function handleSpecificQuestion(questionType) {
+            const topic = knowledgeBase[conversationState.currentTopic];
+            if (topic && topic.questions[questionType]) {
+                return topic.questions[questionType];
+            }
+            return handleFollowUp('');
+        }
+
+        // Handle general questions within current topic
+        function handleTopicQuestion(text) {
+            const topic = knowledgeBase[conversationState.currentTopic];
+            
+            // Check each subtopic for relevant information
+            for (let subtopic in topic.mainTopics) {
+                if (text.includes(subtopic)) {
+                    conversationState.currentSubtopic = subtopic;
+                    return topic.mainTopics[subtopic].info;
+                }
+            }
+
+            // Provide general topic information and suggest subtopics
+            const subtopics = Object.keys(topic.mainTopics);
+            return `I can help you with ${subtopics.join(', ')} in ${conversationState.currentTopic}. What would you like to know more about?`;
+        }
+
+        // Detect main topic from user input
+        function detectTopic(text) {
+            for (let topic in knowledgeBase) {
+                if (knowledgeBase[topic].keywords.some(keyword => text.includes(keyword))) {
+                    return topic;
+                }
+            }
+            return null;
+        }
+
+        // Get default response when no specific context is found
+        function getDefaultResponse() {
+            const responses = [
+                "I can help you with budgeting and investing. What topic interests you?",
+                "Would you like to learn about budgeting or investing strategies?",
+                "I'm here to help with your financial questions. What would you like to know?",
+                "Let's discuss your financial goals. Are you interested in budgeting or investing?"
+            ];
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+
+        // Add message to chat
+        function addMessage(message, isUser = false) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            messageDiv.textContent = message;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            
+            // Update conversation history
+            conversationState.history.push({
+                message: message,
+                isUser: isUser,
+                timestamp: new Date().getTime(),
+                topic: conversationState.currentTopic
+            });
+        }
+
+        // Show/hide typing indicator
+        function showTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'block';
+        }
+
+        function hideTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'none';
+        }
+
+        // Send message
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            
+            if (message === '') return;
+            
+            addMessage(message, true);
+            input.value = '';
+
+            showTypingIndicator();
+
+            // Simulate processing time for more natural interaction
+            setTimeout(() => {
+                const response = processUserInput(message);
+                hideTypingIndicator();
+                addMessage(response);
+            }, 1000);
+        }
+
+        // Initialize chat
+        window.onload = () => {
+            setTimeout(() => {
+                addMessage("Hi! I'm your AI Financial Advisor. I can help you with budgeting and investing. What would you like to learn about?");
+            }, 500);
+        };
+
+        // Handle enter key
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
