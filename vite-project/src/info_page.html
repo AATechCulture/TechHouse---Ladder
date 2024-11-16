@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Additional Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tell Us About Yourself</h1>
+    <form action="http://localhost:5000/process_data" method="post">
+        <div class="form-group">
+            <label for="age">What's your age range?</label>
+            <select id="age" name="age" required>
+                <option value="" disabled selected>Select your age range</option>
+                <option value="under_18">Under 18</option>
+                <option value="18_25">18-25</option>
+                <option value="26_35">26-35</option>
+                <option value="36_50">36-50</option>
+                <option value="50_plus">50+</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="experience">How would you describe your financial experience?</label>
+            <select id="experience" name="experience" required>
+                <option value="" disabled selected>Select an option</option>
+                <option value="beginner">Complete beginner</option>
+                <option value="basic">Know the basics</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="goal">What's your current financial goal?</label>
+            <input type="text" id="goal" name="goal" placeholder="E.g., Save money, Pay off debt" required>
+        </div>
+
+        <div class="form-group">
+            <label for="income">Do you currently have regular income?</label>
+            <select id="income" name="income" required>
+                <option value="" disabled selected>Select an option</option>
+                <option value="full_time">Yes, full-time job</option>
+                <option value="part_time">Yes, part-time job</option>
+                <option value="no_income">No income yet</option>
+                <option value="prefer_not">Prefer not to say</option>
+            </select>
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
