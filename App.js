@@ -15,7 +15,7 @@ const PriceGuessingGame = () => {
     'Pipe Insulation'
   ];
 
-  // Sample product data (since we can't directly connect to Lowe's API in frontend)
+
   const mockProductData = {
     'Water Heater': [449.99, 499.99, 599.99, 699.99],
     'Water Heater Repair Kit': [29.99, 39.99, 49.99, 59.99],
