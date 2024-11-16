@@ -5,7 +5,7 @@ Feel free to use any languages or frameworks, but the following information must
 _______________
 _______________
 
-# Project Name
+# Project Name: Ladder
 
 ## Challenge Statement(s) Addressed 🎯
 **...include the challenge statement(s) the project worked to address**
@@ -37,11 +37,11 @@ Example:
 **...point us to your PPT or Canva slides 😍**
 
 ### Team Checklist ✅
-- [ ] Team photo
-- [ ] Team Slack channel
-- [ ] Communication established with mentor
-- [ ] Repo creation from this template
-- [ ] Hangar registration
+- [x] Team photo
+- [x] Team Slack channel
+- [x] Communication established with mentor
+- [x] Repo creation from this template
+- [x] Hangar registration
 
 ### Project Checklist 🏁
 - [ ] Presentation complete and linked
@@ -49,14 +49,17 @@ Example:
 - [ ] Code merged to main branch
 
 ### School Name 🏫
-The ABC School
+Morehouse College
 
 ### Team Name 🏷
-Coding Costars
+TechHouse
 
 ### ✨ Contributors ✨
 **...tell the world who you and your team are 🙂**
-* Team member X 
-* Team member Y 
-* Team member Z 
+Tyseir Sykes-Paupaw
+Masai Young
+Christian L. Johnson
+Olutade Jegede
+Jean-Dominique Anoh
+
 
