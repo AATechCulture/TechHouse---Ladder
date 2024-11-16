@@ -5,11 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot Integration</title>
     <style>
-        .chatbot-container iframe {
-            overflow: hidden;
-            height: 80vh;
-            width: 480px;
-            bottom: -30px;
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .button-container {
+            display: flex;
+            gap: 2rem; /* Space between buttons */
+        }
+        .button-container img {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
             border: 2px solid #E2E8F0;
             border-radius: 0.375rem;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -17,61 +28,37 @@
     </style>
 </head>
 <body>
-    <div id="chatbot-container">
-        <script>
-            window.addEventListener("message", function (event) {
-                var chatIframe = document.getElementById("openassistantgpt-chatbot-iframe");
-                var buttonIframe = document.getElementById("openassistantgpt-chatbot-button-iframe");
-                if (event.data === "openChat") {
-                    console.log("Toggle chat visibility");
-                    if (chatIframe && buttonIframe) {
-                        chatIframe.contentWindow.postMessage("openChat", "*");
-                        buttonIframe.contentWindow.postMessage("openChat", "*");
-                        chatIframe.style.pointerEvents = "auto";
-                        chatIframe.style.display = "block";
-                        if (window.innerWidth < 640) {
-                            chatIframe.style.position = "fixed";
-                            chatIframe.style.width = "100%";
-                            chatIframe.style.height = "100%";
-                            chatIframe.style.top = "0";
-                            chatIframe.style.left = "0";
-                            chatIframe.style.zIndex = "9999";
-                        } else {
-                            chatIframe.style.position = "fixed";
-                            chatIframe.style.width = "480px";
-                            chatIframe.style.height = "65vh";
-                            chatIframe.style.bottom = "0";
-                            chatIframe.style.right = "0";
-                        }
-                    } else {
-                        console.error("iframe not found");
-                    }
-                }
-                if (event.data === "closeChat" && chatIframe && buttonIframe) {
-                    chatIframe.style.display = "none";
-                    chatIframe.style.pointerEvents = "none";
-                    chatIframe.contentWindow.postMessage("closeChat", "*");
-                    buttonIframe.contentWindow.postMessage("closeChat", "*");
-                }
-            });
-        </script>
-        
-        <!-- Button to open the chatbot -->
-        <iframe
-            src="https://www.openassistantgpt.io/embed/cm3k0l5hl0001krvs7l6ylv6c/button?chatbox=false"
-            scrolling="no"
-            id="openassistantgpt-chatbot-button-iframe"
-            class="fixed bottom-0 right-0 mb-4 z-50 flex items-end inline-block mr-4 w-14 h-14 border border-gray-300 rounded-full shadow-md"
-        ></iframe>
+    <div class="button-container">
+        <!-- Chatbot button -->
+        <img src="chatIcon.png" alt="Chatbot Icon" id="chatbot-button" />
 
-        <!-- Chatbot iframe -->
-        <iframe
-            src="https://www.openassistantgpt.io/embed/cm3k0l5hl0001krvs7l6ylv6c/window?chatbox=false&withExitX=true"
-            id="openassistantgpt-chatbot-iframe"
-            style="display: none; margin-right: 1rem; margin-bottom: 6rem; position: fixed; right: 0; bottom: 0; pointer-events: none; overflow: hidden; height: 65vh; border: 2px solid #E2E8F0; border-radius: 0.375rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); width: 480px;"
-            allow="clipboard-read; clipboard-write"
-            class="z-50"
-        ></iframe>
+        <!-- Modules link button -->
+        <a href="modules.html">
+            <img src="moduleIcon.png" alt="Modules Icon" />
+        </a>
     </div>
+
+    <iframe
+        src="https://www.openassistantgpt.io/embed/cm3k0l5hl0001krvs7l6ylv6c/window?chatbox=false&withExitX=true"
+        id="openassistantgpt-chatbot-iframe"
+        style="display: none; margin-right: 1rem; margin-bottom: 6rem; position: fixed; right: 0; bottom: 0; pointer-events: none; overflow: hidden; height: 65vh; border: 2px solid #E2E8F0; border-radius: 0.375rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); width: 480px;"
+        allow="clipboard-read; clipboard-write"
+        class="z-50"
+    ></iframe>
+
+    <script>
+        const chatbotButton = document.getElementById('chatbot-button');
+        const chatbotIframe = document.getElementById('openassistantgpt-chatbot-iframe');
+
+        chatbotButton.addEventListener('click', () => {
+            if (chatbotIframe.style.display === 'none') {
+                chatbotIframe.style.display = 'block';
+                chatbotIframe.style.pointerEvents = 'auto';
+            } else {
+                chatbotIframe.style.display = 'none';
+                chatbotIframe.style.pointerEvents = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
