@@ -53,34 +53,18 @@
         <img src="chatIcon.png" alt="Chatbot Icon" id="chatbot-button" />
     </div>
 
-    <iframe
-        src="https://www.openassistantgpt.io/embed/cm3k0l5hl0001krvs7l6ylv6c/window?chatbox=false&withExitX=true"
-        id="openassistantgpt-chatbot-iframe"
-        style="display: none; margin-right: 1rem; margin-bottom: 6rem; position: fixed; right: 0; bottom: 0; pointer-events: none; overflow: hidden; height: 65vh; width: 480px;"
-        allow="clipboard-read; clipboard-write"
-        class="z-50"
-    ></iframe>
-
     <script>
         const chatbotButton = document.getElementById('chatbot-button');
-        const chatbotIframe = document.getElementById('openassistantgpt-chatbot-iframe');
         const logoutButton = document.getElementById('logout-button');
 
-        // Toggle Chatbot Visibility
+        // Redirect to chatbotImplementation.html on Chatbot button click
         chatbotButton.addEventListener('click', () => {
-            if (chatbotIframe.style.display === 'none') {
-                chatbotIframe.style.display = 'block';
-                chatbotIframe.style.pointerEvents = 'auto';
-            } else {
-                chatbotIframe.style.display = 'none';
-                chatbotIframe.style.pointerEvents = 'none';
-            }
+            window.location.href = 'chatbotImplementation.html';
         });
 
         // Logout Button Action
         logoutButton.addEventListener('click', () => {
             alert('You have been logged out.');
-            // Redirect to login page or another action
             window.location.href = 'login.html';
         });
     </script>
