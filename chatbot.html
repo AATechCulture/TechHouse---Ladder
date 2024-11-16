@@ -6,20 +6,32 @@
     <title>Chatbot Integration</title>
     <style>
         body {
-            background-color: black;
+            background-color: #333; /* Dark grey background */
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            position: relative; /* Allows absolute positioning of the logout button */
+        }
+        .logout-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
         }
         .button-container {
             display: flex;
             gap: 2rem; /* Space between buttons */
         }
         .button-container img {
-            width: 100px;
-            height: 100px;
+            width: 200px; /* Doubled size */
+            height: 200px; /* Doubled size */
             cursor: pointer;
         }
         .button-container a, .button-container img {
@@ -28,6 +40,9 @@
     </style>
 </head>
 <body>
+    <!-- Logout Button -->
+    <button class="logout-button" id="logout-button">Logout</button>
+
     <div class="button-container">
         <!-- Modules link button -->
         <a href="module.html">
@@ -49,7 +64,9 @@
     <script>
         const chatbotButton = document.getElementById('chatbot-button');
         const chatbotIframe = document.getElementById('openassistantgpt-chatbot-iframe');
+        const logoutButton = document.getElementById('logout-button');
 
+        // Toggle Chatbot Visibility
         chatbotButton.addEventListener('click', () => {
             if (chatbotIframe.style.display === 'none') {
                 chatbotIframe.style.display = 'block';
@@ -58,6 +75,13 @@
                 chatbotIframe.style.display = 'none';
                 chatbotIframe.style.pointerEvents = 'none';
             }
+        });
+
+        // Logout Button Action
+        logoutButton.addEventListener('click', () => {
+            alert('You have been logged out.');
+            // Redirect to login page or another action
+            window.location.href = 'login.html';
         });
     </script>
 </body>
