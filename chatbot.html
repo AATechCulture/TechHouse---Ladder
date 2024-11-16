@@ -18,30 +18,30 @@
             gap: 2rem; /* Space between buttons */
         }
         .button-container img {
-            width: 150px; /* Increased size by 50% */
-            height: 150px; /* Increased size by 50% */
+            width: 100px;
+            height: 100px;
             cursor: pointer;
-            border: 2px solid #E2E8F0;
-            border-radius: 0.375rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .button-container a, .button-container img {
+            display: block;
         }
     </style>
 </head>
 <body>
     <div class="button-container">
-        <!-- Chatbot button -->
-        <img src="chatIcon.png" alt="Chatbot Icon" id="chatbot-button" />
-
         <!-- Modules link button -->
         <a href="module.html">
             <img src="modulesIcon.png" alt="Modules Icon" />
         </a>
+
+        <!-- Chatbot button -->
+        <img src="chatIcon.png" alt="Chatbot Icon" id="chatbot-button" />
     </div>
 
     <iframe
         src="https://www.openassistantgpt.io/embed/cm3k0l5hl0001krvs7l6ylv6c/window?chatbox=false&withExitX=true"
         id="openassistantgpt-chatbot-iframe"
-        style="display: none; margin-right: 1rem; margin-bottom: 6rem; position: fixed; right: 0; bottom: 0; pointer-events: none; overflow: hidden; height: 65vh; border: 2px solid #E2E8F0; border-radius: 0.375rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); width: 480px;"
+        style="display: none; margin-right: 1rem; margin-bottom: 6rem; position: fixed; right: 0; bottom: 0; pointer-events: none; overflow: hidden; height: 65vh; width: 480px;"
         allow="clipboard-read; clipboard-write"
         class="z-50"
     ></iframe>
